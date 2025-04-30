@@ -1,0 +1,216 @@
+openapi: 3.0.3
+info:
+  title: HR Assistant API
+  description: |
+    API for the HR Assistant Demo application that provides career planning assistance
+    using Azure OpenAI and Azure AI Search for RAG (Retrieval Augmented Generation).
+    
+    This API allows users to ask career-related questions and receive responses generated
+    with context from the company's internal HR documents.
+  version: 1.0.0
+  contact:
+    name: Contoso HR Technology Team
+servers:
+  - url: https://hr-assistant-demo-webapp.azurewebsites.net
+    description: Azure App Service production environment
+paths:
+  /health:
+    get:
+      summary: Health check endpoint
+      description: |
+        Returns the health status of the API and its components (webapp, OpenAI, AI Search).
+        This endpoint will always return a 200 status code for Azure infrastructure health probes,
+        but provides detailed component health information for API clients.
+      operationId: getHealth
+      responses:
+        '200':
+          description: Health status information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /api/career-plan:
+    post:
+      summary: Generate a career plan response
+      description: |
+        Generates a customized career plan or advice using RAG (Retrieval Augmented Generation).
+        The API searches relevant HR documents using Azure AI Search and then generates
+        a response using Azure OpenAI that's grounded in the retrieved context.
+      operationId: generateCareerPlan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CareerPlanRequest'
+            examples:
+              skillQuery:
+                summary: Query about skills for project management
+                value:
+                  query: "What skills should I develop to become a project leader?"
+                  conversation_history: []
+              aiCareerQuery:
+                summary: Query about AI career track with conversation history
+                value:
+                  query: "What training courses should I take for a career in AI project management?"
+                  conversation_history: [
+                    {
+                      "role": "user",
+                      "content": "I'm interested in becoming an AI project manager at Contoso"
+                    },
+                    {
+                      "role": "assistant",
+                      "content": "That's a great career goal! Contoso has a growing AI division and needs project managers with specialized AI knowledge. What's your current background?"
+                    },
+                    {
+                      "role": "user",
+                      "content": "I have 4 years of experience as a software engineer and some project coordination experience."
+                    }
+                  ]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareerPlanResponse'
+              examples:
+                successExample:
+                  summary: Successful career plan response
+                  value:
+                    status: "success"
+                    response: "Based on Contoso's career development resources, to become a project leader you should focus on developing skills in strategic planning, risk management, team coordination & leadership, and budget management. The Project Management Professional (PMP) certification is preferred for this role. Contoso offers an Advanced Project Management Workshop that covers these areas. Additionally, you might want to consider the mentorship program to connect with experienced project leaders."
+        '400':
+          description: Bad request - missing required fields or invalid JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                missingQueryExample:
+                  summary: Missing query parameter
+                  value:
+                    status: "error"
+                    message: "Missing required field: query"
+        '503':
+          description: Service unavailable - configuration error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                configErrorExample:
+                  summary: Service configuration error
+                  value:
+                    status: "error"
+                    message: "Service configuration error: OpenAI client not available."
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                serverErrorExample:
+                  summary: Unexpected server error
+                  value:
+                    status: "error"
+                    message: "An unexpected server error occurred."
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Overall status of the API
+          example: "healthy"
+        components:
+          type: object
+          properties:
+            webapp:
+              type: string
+              description: Web application status
+              example: "healthy"
+            openai:
+              type: string
+              description: Azure OpenAI connection status
+              example: "healthy"
+            search:
+              type: string
+              description: Azure AI Search connection status
+              example: "healthy"
+        environment_variables:
+          type: object
+          properties:
+            AZURE_OPENAI_ENDPOINT:
+              type: string
+              description: Status of the OpenAI endpoint configuration
+              example: "SET"
+            AZURE_OPENAI_DEPLOYMENT_NAME:
+              type: string
+              description: Status of the OpenAI deployment name configuration
+              example: "gpt-4o"
+            AZURE_SEARCH_SERVICE_ENDPOINT:
+              type: string
+              description: Status of the AI Search endpoint configuration
+              example: "SET"
+            AZURE_SEARCH_INDEX_NAME:
+              type: string
+              description: Status of the AI Search index name configuration
+              example: "contoso-career-docs-index"
+        warnings:
+          type: string
+          description: Any warnings about the API configuration
+          example: "Azure OpenAI client initialization error: Invalid API key"
+        instance:
+          type: string
+          description: Instance ID of the Azure App Service
+          example: "RD00155D3A1A27"
+    CareerPlanRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The user's question about career planning
+          example: "What skills should I develop to become a project leader?"
+        conversation_history:
+          type: array
+          description: Optional array of previous messages in the conversation for context
+          items:
+            type: object
+            required:
+              - role
+              - content
+            properties:
+              role:
+                type: string
+                enum: [system, user, assistant]
+                description: The role of the message sender
+              content:
+                type: string
+                description: The content of the message
+    CareerPlanResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the response
+          example: "success"
+        response:
+          type: string
+          description: The generated career plan or advice
+          example: "Based on Contoso's career development resources, to become a project leader you should focus on developing skills in strategic planning, risk management, team coordination & leadership, and budget management..."
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Error status
+          example: "error"
+        message:
+          type: string
+          description: Error message
+          example: "An unexpected server error occurred."

@@ -1,0 +1,56 @@
+{
+  "title": "Contoso Internal: AI Fundamentals for Leaders & PMs",
+  "document_id": "TRN-AI-LEAD-2025-01",
+  "provider": "Contoso AI Center of Excellence (Internal L&D)",
+  "format": "Online, Self-Paced with optional Workshops",
+  "duration_hours": 16,
+  "last_updated": "2025-04-15",
+  "company": "Contoso",
+  "content": {
+    "course_description": "This foundational course provides Contoso leaders and project managers with a comprehensive overview of Artificial Intelligence and Machine Learning concepts, terminology, common use cases, potential business value, and ethical considerations. It aims to demystify AI and equip non-technical leaders to effectively collaborate with AI teams and oversee AI initiatives.",
+    "learning_objectives": [
+      "Understand core AI/ML concepts (e.g., supervised/unsupervised learning, deep learning, NLP).",
+      "Identify potential AI use cases within Contoso business units.",
+      "Learn the typical lifecycle of an AI/ML project.",
+      "Recognize key challenges in AI projects (data quality, bias, model interpretability).",
+      "Understand Contoso's Responsible AI principles and governance framework.",
+      "Communicate effectively with data scientists and ML engineers."
+    ],
+    "modules": [
+      {
+        "title": "Introduction to AI & ML",
+        "topics": ["History of AI", "Types of Machine Learning", "Key Terminology", "AI vs. Data Science"]
+      },
+      {
+        "title": "AI Use Cases at Contoso",
+        "topics": ["Industry Examples", "Potential Contoso Applications (Sales, Marketing, Operations)", "Assessing Business Value"]
+      },
+      {
+        "title": "The AI Project Lifecycle",
+        "topics": ["Problem Definition", "Data Collection & Preparation", "Model Training & Evaluation", "Deployment & Monitoring"]
+      },
+      {
+        "title": "Data for AI",
+        "topics": ["Importance of Data Quality", "Data Governance Basics", "Introduction to Data Pipelines"]
+      },
+      {
+        "title": "Responsible AI at Contoso",
+        "topics": ["Understanding Bias and Fairness", "Transparency and Interpretability", "Contoso's AI Ethics Guidelines", "Regulatory Landscape"]
+      },
+      {
+        "title": "Collaborating with AI Teams",
+        "topics": ["Roles (Data Scientist, ML Engineer)", "Effective Communication Strategies", "Setting Realistic Expectations"]
+      }
+    ],
+    "target_audience": [
+      "Project Managers",
+      "Program Managers",
+      "Product Managers",
+      "Team Leads",
+      "Business Analysts",
+      "Department Heads"
+    ],
+    "prerequisites": "None",
+    "internal_link": "https://contoso.sharepoint.com/sites/Learning/SitePages/Course-TRN-AI-LEAD-2025-01.aspx"
+  }
+}

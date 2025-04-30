@@ -1,0 +1,58 @@
+{
+  "title": "Contoso - Key Company Policies Summary",
+  "document_id": "POL-SUMMARY-2025-01",
+  "department": "Human Resources / Legal / IT Governance",
+  "effective_date": "2025-01-01",
+  "last_updated": "2025-04-18",
+  "company": "Contoso",
+  "content": {
+    "introduction": "This document provides a summary of key Contoso policies relevant to employee career development, training, internal mobility, and technology usage. Employees should refer to the full policy documents available on the internal HR and Legal portals for complete details.",
+    "professional_development_training": {
+      "policy_id": "POL-HR-DEV-2024-03",
+      "summary": "Contoso encourages continuous learning and provides resources for professional development. Employees are eligible for an annual training budget (subject to manager approval and relevance to role/career path). Time off for approved training courses and certifications is supported.",
+      "key_points": [
+        "Annual training budget allocated per employee (amount varies by job level).",
+        "Training requests must be submitted via the internal Learning portal and require manager approval.",
+        "Focus on skills relevant to current role, future career aspirations within Contoso, or required certifications.",
+        "Contoso offers a wide range of internal courses and partnerships with external providers (see Learning portal).",
+        "Certification exam fees may be reimbursed upon successful completion (pre-approval required)."
+      ],
+      "internal_link": "https://contoso.sharepoint.com/sites/HR/SitePages/Policies/ProfessionalDevelopment.aspx"
+    },
+    "internal_mobility_promotion": {
+      "policy_id": "POL-HR-MOB-2024-01",
+      "summary": "Contoso prioritizes internal talent for open positions. Employees are encouraged to explore opportunities across departments. Promotions are based on performance, skill development, and business needs.",
+      "key_points": [
+        "Internal job board lists all open positions.",
+        "Employees typically need to be in their current role for at least 12-18 months before applying for internal transfer (exceptions possible).",
+        "Promotion criteria include consistent high performance, demonstrated readiness for the next level, and alignment with role requirements.",
+        "Career development discussions with managers are key to identifying promotion readiness and opportunities.",
+        "Cross-functional project assignments are encouraged for skill broadening."
+      ],
+      "internal_link": "https://contoso.sharepoint.com/sites/HR/SitePages/Policies/InternalMobility.aspx"
+    },
+    "responsible_ai_usage": {
+      "policy_id": "POL-LEGAL-AI-2025-01",
+      "summary": "Contoso is committed to the ethical and responsible development and use of AI. All AI projects and usage of AI tools must adhere to Contoso's Responsible AI Principles.",
+      "key_points": [
+        "Principles include Fairness, Reliability & Safety, Privacy & Security, Inclusiveness, Transparency, and Accountability.",
+        "Mandatory training required for employees involved in developing or deploying AI solutions.",
+        "AI projects must undergo an ethical review process coordinated by the AI Center of Excellence and Legal.",
+        "Use of generative AI tools for work purposes must comply with data confidentiality and intellectual property guidelines.",
+        "Report any concerns regarding AI ethics or misuse via designated channels."
+      ],
+      "internal_link": "https://contoso.sharepoint.com/sites/Legal/SitePages/Policies/ResponsibleAIUsage.aspx"
+    },
+    "remote_work_policy": {
+      "policy_id": "POL-HR-REMOTE-2024-05",
+      "summary": "Contoso supports flexible work arrangements, including hybrid and fully remote options for eligible roles, subject to business needs and manager approval. Specific arrangements are documented individually.",
+      "key_points": [
+        "Eligibility depends on role requirements and performance.",
+        "Formal request and approval process required.",
+        "Employees working remotely must maintain a suitable home office environment and adhere to security protocols.",
+        "Expectations for communication and availability remain consistent regardless of work location."
+      ],
+      "internal_link": "https://contoso.sharepoint.com/sites/HR/SitePages/Policies/RemoteWork.aspx"
+    }
+  }
+}

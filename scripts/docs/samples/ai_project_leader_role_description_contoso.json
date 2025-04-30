@@ -1,0 +1,43 @@
+{
+  "title": "AI Project Leader Role Description - Contoso",
+  "document_id": "JD-AI-PL-2025-05",
+  "department": "AI Center of Excellence / Project Management Unit",
+  "last_updated": "2025-04-20",
+  "company": "Contoso",
+  "content": {
+    "position_summary": "The AI Project Leader at Contoso is responsible for planning, executing, and delivering complex projects focused on the development and deployment of Artificial Intelligence and Machine Learning solutions. This role requires a blend of traditional project management excellence with a strong understanding of the AI/ML project lifecycle, data requirements, ethical considerations, and cross-functional collaboration with data scientists, engineers, and business stakeholders.",
+    "key_responsibilities": [
+      "Define scope, goals, and deliverables for AI projects in collaboration with senior management and stakeholders.",
+      "Develop detailed project plans, including timelines, resource allocation (data scientists, ML engineers, data engineers, domain experts), and budget management specific to AI initiatives (e.g., compute resources, data acquisition).",
+      "Manage the end-to-end AI project lifecycle, from ideation and data exploration through model development, validation, deployment, and monitoring.",
+      "Facilitate communication between technical teams (AI/ML researchers, engineers) and business stakeholders, translating complex technical concepts into business value.",
+      "Identify and manage project dependencies and critical paths, paying close attention to data availability, model training times, and validation processes.",
+      "Implement and manage agile methodologies (e.g., Scrum, Kanban) adapted for AI/ML projects, accommodating iterative development and experimentation.",
+      "Proactively identify, assess, and mitigate risks specific to AI projects, including data bias, model performance degradation, ethical concerns, and regulatory compliance.",
+      "Track project performance using appropriate metrics and tools, reporting on progress, challenges, and outcomes to stakeholders.",
+      "Ensure adherence to Contoso's Responsible AI principles and data governance policies throughout the project lifecycle.",
+      "Coordinate user acceptance testing (UAT) and feedback loops for AI model performance and usability.",
+      "Manage vendor relationships for AI tools or external data sources, if applicable.",
+      "Foster a collaborative and innovative environment within the project team."
+    ],
+    "qualifications": {
+      "education": "Bachelor's or Master's degree in Computer Science, Engineering, Data Science, Business, or related field.",
+      "experience": [
+        "7+ years of project management experience, with at least 2+ years managing technology or data-intensive projects.",
+        "Demonstrated experience leading cross-functional teams.",
+        "Experience with Agile methodologies is required; experience adapting Agile for AI/ML projects is highly desirable."
+      ],
+      "knowledge_skills": [
+        "Strong understanding of project management principles and methodologies (PMP certification is a strong plus).",
+        "Good understanding of the AI/ML development lifecycle, common challenges, and terminology.",
+        "Familiarity with data science concepts and workflows.",
+        "Excellent communication, negotiation, and stakeholder management skills.",
+        "Ability to manage ambiguity and navigate the experimental nature of AI projects.",
+        "Familiarity with cloud platforms (Azure preferred) and MLOps concepts is a plus.",
+        "Awareness of ethical AI principles and data privacy regulations."
+      ]
+    },
+    "reporting_structure": "Reports to Director of AI Programs or Head of PMU.",
+    "collaboration": "Works closely with Data Scientists, ML Engineers, Data Engineers, Business Analysts, Product Managers, Legal/Compliance, and IT Operations."
+  }
+}

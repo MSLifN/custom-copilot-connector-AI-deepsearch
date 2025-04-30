@@ -1,0 +1,55 @@
+{
+  "title": "Advanced Project Management Workshop",
+  "document_id": "TRN-APM-2025-01",
+  "provider": "Internal L&D Department",
+  "last_updated": "2025-04-01",
+  "content": {
+    "course_description": "This intensive 3-day workshop is designed for experienced project coordinators and aspiring project leaders. It covers advanced project management methodologies, risk assessment techniques, stakeholder communication strategies, and the use of modern project management tools.",
+    "learning_objectives": [
+      "Master advanced concepts in Agile and Waterfall methodologies.",
+      "Develop comprehensive risk mitigation plans.",
+      "Enhance stakeholder management and communication skills.",
+      "Gain proficiency in using tools like Azure DevOps Boards and Microsoft Project for complex projects.",
+      "Prepare for PMP certification exam topics."
+    ],
+    "modules": [
+      {
+        "day": 1,
+        "topic": "Advanced Methodologies & Frameworks",
+        "details": [
+          "Deep dive into Scrum vs. Kanban vs. Waterfall",
+          "Hybrid project management approaches",
+          "Scaling Agile frameworks (SAFe overview)"
+        ]
+      },
+      {
+        "day": 2,
+        "topic": "Risk Management & Quality Assurance",
+        "details": [
+          "Quantitative and Qualitative Risk Analysis",
+          "Developing a Risk Response Plan",
+          "Implementing Quality Control Processes"
+        ]
+      },
+      {
+        "day": 3,
+        "topic": "Stakeholder Management & Advanced Tools",
+        "details": [
+          "Advanced Communication Planning",
+          "Conflict Resolution Strategies",
+          "Leveraging Azure DevOps for Project Tracking",
+          "Microsoft Project Power Features"
+        ]
+      }
+    ],
+    "target_audience": [
+      "Project Coordinators",
+      "Junior Project Managers",
+      "Team Leads aspiring to Project Leadership"
+    ],
+    "prerequisites": [
+      "Minimum 2 years of experience in a project environment",
+      "Basic understanding of project management principles"
+    ]
+  }
+}

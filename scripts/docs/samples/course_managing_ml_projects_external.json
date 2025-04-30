@@ -1,0 +1,65 @@
+{
+  "title": "Managing Machine Learning Projects (External Course Recommendation)",
+  "document_id": "TRN-EXT-MLPM-2025-01",
+  "provider": "AI Training Corp (External Vendor)",
+  "format": "Online, Instructor-Led (Virtual Classroom)",
+  "duration_weeks": 6,
+  "estimated_cost_usd": 2500,
+  "last_updated": "2025-04-25",
+  "company_relevance": "Contoso Approved Vendor for Technical Training",
+  "content": {
+    "course_description": "This comprehensive course provides project managers with the specific skills and knowledge required to successfully lead Machine Learning projects. It covers the unique aspects of the ML lifecycle, data management strategies, model evaluation techniques, MLOps principles, and team management for data science projects.",
+    "learning_objectives": [
+      "Understand the end-to-end ML project lifecycle and its differences from traditional software projects.",
+      "Learn techniques for defining ML project scope, objectives, and success metrics.",
+      "Develop strategies for managing data acquisition, preparation, and versioning.",
+      "Understand common ML model evaluation metrics and validation strategies.",
+      "Gain insights into MLOps practices for deploying and monitoring ML models.",
+      "Learn effective communication and collaboration techniques for working with data scientists and ML engineers.",
+      "Identify and mitigate risks specific to ML projects (e.g., data drift, model bias, scalability)."
+    ],
+    "modules": [
+      {
+        "week": 1,
+        "title": "Introduction to ML Project Management",
+        "topics": ["ML vs. Traditional Software Projects", "CRISP-DM and other ML Lifecycles", "Defining Business Problems for ML"]
+      },
+      {
+        "week": 2,
+        "title": "Data Management for ML",
+        "topics": ["Data Sourcing and Acquisition", "Data Quality Assessment", "Feature Engineering Overview", "Data Versioning and Lineage"]
+      },
+      {
+        "week": 3,
+        "title": "Model Development & Evaluation",
+        "topics": ["Understanding Model Training Processes", "Key Evaluation Metrics (Accuracy, Precision, Recall, F1, AUC)", "Validation Strategies (Cross-Validation)", "Communicating Model Performance"]
+      },
+      {
+        "week": 4,
+        "title": "MLOps and Deployment",
+        "topics": ["Introduction to MLOps", "Model Deployment Strategies (Batch, Real-time)", "Monitoring Model Performance in Production", "CI/CD for ML"]
+      },
+      {
+        "week": 5,
+        "title": "Team & Stakeholder Management",
+        "topics": ["Managing Data Science Teams", "Agile for ML Projects", "Communicating Technical Concepts to Business Stakeholders", "Ethical Considerations in ML Deployment"]
+      },
+      {
+        "week": 6,
+        "title": "Risk Management & Capstone Project",
+        "topics": ["Identifying ML-Specific Risks", "Risk Mitigation Strategies", "Capstone Project Planning Exercise"]
+      }
+    ],
+    "target_audience": [
+      "Project Managers transitioning to AI/ML projects",
+      "Technical Program Managers",
+      "Scrum Masters working with data science teams",
+      "Product Managers for AI-driven products"
+    ],
+    "prerequisites": [
+      "Minimum 3 years of project management experience",
+      "Basic understanding of AI/ML concepts (Completion of TRN-AI-LEAD-2025-01 or equivalent recommended)"
+    ],
+    "external_link": "https://www.aitrainingcorp-example.com/courses/managing-ml-projects"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "HR Assistant API",
+    "description": "API for the HR Assistant Demo application that provides career planning assistance using Azure OpenAI and Azure AI Search for RAG (Retrieval Augmented Generation).\n\nThis API allows users to ask career-related questions and receive responses generated with context from the company's internal HR documents.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Contoso HR Technology Team"
+    }
+  },
+  "host": "hr-assistant-demo-webapp.azurewebsites.net",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "description": "Returns the health status of the API and its components (webapp, OpenAI, AI Search).\nThis endpoint will always return a 200 status code for Azure infrastructure health probes, but provides detailed component health information for API clients.",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Health status information",
+            "schema": {
+              "$ref": "#/definitions/HealthResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "healthy",
+                "components": {
+                  "webapp": "healthy",
+                  "openai": "healthy",
+                  "search": "healthy"
+                },
+                "environment_variables": {
+                  "AZURE_OPENAI_ENDPOINT": "SET",
+                  "AZURE_OPENAI_DEPLOYMENT_NAME": "gpt-4o",
+                  "AZURE_SEARCH_SERVICE_ENDPOINT": "SET",
+                  "AZURE_SEARCH_INDEX_NAME": "contoso-career-docs-index"
+                },
+                "instance": "RD00155D3A1A27"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/career-plan": {
+      "post": {
+        "summary": "Generate a career plan response",
+        "description": "Generates a customized career plan or advice using RAG (Retrieval Augmented Generation).\nThe API searches relevant HR documents using Azure AI Search and then generates a response using Azure OpenAI that's grounded in the retrieved context.",
+        "operationId": "generateCareerPlan",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "requestBody",
+            "in": "body",
+            "description": "Career plan request with query and optional conversation history",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CareerPlanRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/CareerPlanResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "response": "Based on Contoso's career development resources, to become a project leader you should focus on developing skills in strategic planning, risk management, team coordination & leadership, and budget management. The Project Management Professional (PMP) certification is preferred for this role. Contoso offers an Advanced Project Management Workshop that covers these areas. Additionally, you might want to consider the mentorship program to connect with experienced project leaders."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - missing required fields or invalid JSON",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "error",
+                "message": "Missing required field: query"
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable - configuration error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "error",
+                "message": "Service configuration error: OpenAI client not available."
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            },
+            "examples": {
+              "application/json": {
+                "status": "error",
+                "message": "An unexpected server error occurred."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "HealthResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Overall status of the API",
+          "example": "healthy"
+        },
+        "components": {
+          "type": "object",
+          "properties": {
+            "webapp": {
+              "type": "string",
+              "description": "Web application status",
+              "example": "healthy"
+            },
+            "openai": {
+              "type": "string",
+              "description": "Azure OpenAI connection status",
+              "example": "healthy"
+            },
+            "search": {
+              "type": "string",
+              "description": "Azure AI Search connection status",
+              "example": "healthy"
+            }
+          }
+        },
+        "environment_variables": {
+          "type": "object",
+          "properties": {
+            "AZURE_OPENAI_ENDPOINT": {
+              "type": "string",
+              "description": "Status of the OpenAI endpoint configuration",
+              "example": "SET"
+            },
+            "AZURE_OPENAI_DEPLOYMENT_NAME": {
+              "type": "string",
+              "description": "Status of the OpenAI deployment name configuration",
+              "example": "gpt-4o"
+            },
+            "AZURE_SEARCH_SERVICE_ENDPOINT": {
+              "type": "string",
+              "description": "Status of the AI Search endpoint configuration",
+              "example": "SET"
+            },
+            "AZURE_SEARCH_INDEX_NAME": {
+              "type": "string",
+              "description": "Status of the AI Search index name configuration",
+              "example": "contoso-career-docs-index"
+            }
+          }
+        },
+        "warnings": {
+          "type": "string",
+          "description": "Any warnings about the API configuration",
+          "example": "Azure OpenAI client initialization error: Invalid API key"
+        },
+        "instance": {
+          "type": "string",
+          "description": "Instance ID of the Azure App Service",
+          "example": "RD00155D3A1A27"
+        }
+      }
+    },
+    "CareerPlanRequest": {
+      "type": "object",
+      "required": [
+        "query"
+      ],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "The user's question about career planning",
+          "example": "What skills should I develop to become a project leader?"
+        },
+        "conversation_history": {
+          "type": "array",
+          "description": "Optional array of previous messages in the conversation for context",
+          "items": {
+            "type": "object",
+            "required": [
+              "role",
+              "content"
+            ],
+            "properties": {
+              "role": {
+                "type": "string",
+                "enum": [
+                  "system",
+                  "user",
+                  "assistant"
+                ],
+                "description": "The role of the message sender"
+              },
+              "content": {
+                "type": "string",
+                "description": "The content of the message"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CareerPlanResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Status of the response",
+          "example": "success"
+        },
+        "response": {
+          "type": "string",
+          "description": "The generated career plan or advice",
+          "example": "Based on Contoso's career development resources, to become a project leader you should focus on developing skills in strategic planning, risk management, team coordination & leadership, and budget management..."
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Error status",
+          "example": "error"
+        },
+        "message": {
+          "type": "string",
+          "description": "Error message",
+          "example": "An unexpected server error occurred."
+        }
+      }
+    }
+  }
+}

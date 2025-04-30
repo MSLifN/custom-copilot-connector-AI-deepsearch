@@ -1,0 +1,42 @@
+{
+  "employee_id": "EMP-734-AD",
+  "name": "Alex Davis",
+  "current_role": "Software Engineer II",
+  "years_experience": 4,
+  "department": "Technology - Cloud Services",
+  "manager": "Sarah Chen",
+  "profile_last_updated": "2025-04-10",
+  "content": {
+    "summary": "Highly motivated Software Engineer with 4 years of experience in cloud application development, primarily using Python and Azure services. Seeking to transition into a leadership role within the next 3-5 years, focusing on project management and technical mentorship.",
+    "skills": [
+      "Python (Advanced)",
+      "Azure Functions",
+      "Azure App Service",
+      "Azure DevOps (CI/CD)",
+      "JavaScript (Intermediate)",
+      "SQL",
+      "Docker",
+      "Git"
+    ],
+    "interests": [
+      "Cloud Architecture",
+      "Serverless Computing",
+      "Agile Methodologies",
+      "Mentoring Junior Developers"
+    ],
+    "career_goals": [
+      "Short-term (6-12 months): Lead a small feature development team; Obtain Azure Developer Associate certification.",
+      "Medium-term (1-3 years): Transition to a Technical Lead or Junior Project Leader role; Gain experience managing project timelines and resources.",
+      "Long-term (3-5 years): Become a recognized Project Leader or Cloud Solutions Architect within the company."
+    ],
+    "preferred_learning_style": [
+      "Hands-on Labs",
+      "Project-based Learning",
+      "Mentorship"
+    ],
+    "performance_review_notes": {
+      "date": "2025-01-15",
+      "summary": "Alex consistently delivers high-quality code and demonstrates strong technical skills. Shows potential for leadership but needs more experience in planning and delegation. Recommended for leadership training and mentorship opportunities."
+    }
+  }
+}

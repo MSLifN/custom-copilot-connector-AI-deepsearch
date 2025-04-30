@@ -1,0 +1,47 @@
+{
+  "title": "Project Leader Role Description",
+  "document_id": "JD-PL-2025-04",
+  "department": "Human Resources",
+  "last_updated": "2025-03-15",
+  "content": {
+    "position_summary": "The Project Leader is responsible for planning, executing, and closing projects according to strict deadlines and within budget. This includes acquiring resources and coordinating the efforts of team members and third-party contractors or consultants in order to deliver projects according to plan. The Project Leader will also define the project's objectives and oversee quality control throughout its life cycle.",
+    "key_responsibilities": [
+      "Coordinate internal resources and third parties/vendors for the flawless execution of projects",
+      "Ensure that all projects are delivered on-time, within scope and within budget",
+      "Develop project scopes and objectives, involving all relevant stakeholders and ensuring technical feasibility",
+      "Ensure resource availability and allocation",
+      "Develop a detailed project plan to track progress",
+      "Use appropriate verification techniques to manage changes in project scope, schedule and costs",
+      "Measure project performance using appropriate systems, tools and techniques",
+      "Report and escalate to management as needed",
+      "Manage the relationship with the client and all stakeholders",
+      "Perform risk management to minimize project risks",
+      "Establish and maintain relationships with third parties/vendors",
+      "Create and maintain comprehensive project documentation"
+    ],
+    "qualifications": {
+      "education": "Bachelor's degree in appropriate field of study or equivalent work experience",
+      "experience": "5+ years of project management and related experience",
+      "certifications": [
+        "Project Management Professional (PMP) certification preferred",
+        "Agile/Scrum Master certifications are a plus"
+      ],
+      "skills": [
+        "Solid organizational skills including attention to detail and multi-tasking skills",
+        "Strong working knowledge of Microsoft Project and Microsoft Planner",
+        "Experience in using project management software tools",
+        "Strong working knowledge of Microsoft Office Suite",
+        "Excellent client-facing and internal communication skills",
+        "Excellent written and verbal communication skills",
+        "Solid organizational skills including attention to detail and multi-tasking skills",
+        "Strong working knowledge of project management methodologies"
+      ]
+    },
+    "career_path": {
+      "entry_level": "Project Coordinator",
+      "mid_level": "Project Leader",
+      "senior_level": "Senior Project Manager",
+      "executive_level": "Program Director"
+    }
+  }
+}

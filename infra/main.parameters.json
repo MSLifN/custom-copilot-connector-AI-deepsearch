@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "swedencentral" 
+    },
+    "appServicePlanName": {
+      "value": "hr-assistant-demo-webapp-plan" 
+    },
+    "webAppName": {
+      "value": "hr-assistant-demo-webapp" 
+    },
+    "aiSearchServiceName": {
+      "value": "hr-assistant-demo-search-new" 
+    },
+    "openAiEndpoint": {
+      "value": "https://hr-assistant-demo-openai.openai.azure.com/" 
+    },
+    "openAiDeploymentName": {
+      "value": "gpt-4o" 
+    },
+    "aiSearchIndexName": {
+      "value": "contoso-career-docs-index" 
+    }
+  }
+}
+

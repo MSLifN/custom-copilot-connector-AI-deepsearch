@@ -1,0 +1,59 @@
+{
+  "title": "Azure AI Services for Project Managers (Contoso Recommended)",
+  "document_id": "TRN-AZAI-PM-2025-01",
+  "provider": "Microsoft Learn / Contoso Cloud Guild",
+  "format": "Online, Self-Paced Learning Path with Hands-on Labs",
+  "duration_hours": 24,
+  "estimated_cost_usd": 0,
+  "last_updated": "2025-04-28",
+  "company_relevance": "Strategic platform for Contoso; Aligns with AI-900 certification goal",
+  "content": {
+    "course_description": "This learning path, curated by Contoso Cloud Guild using Microsoft Learn resources, provides project managers with a practical understanding of key Azure AI services relevant to Contoso projects. It focuses on service capabilities, common use cases, integration points, and considerations for project planning and execution.",
+    "learning_objectives": [
+      "Identify core Azure AI services (Azure Machine Learning, Azure OpenAI Service, Cognitive Services, Azure Bot Service).",
+      "Understand the typical use cases and benefits of each service within a business context.",
+      "Learn basic concepts for provisioning and managing Azure AI resources.",
+      "Understand cost implications and monitoring options for Azure AI services.",
+      "Recognize integration patterns between different Azure services (e.g., Data Factory, Synapse Analytics, App Service).",
+      "Prepare for the AI-900 Azure AI Fundamentals certification exam."
+    ],
+    "modules": [
+      {
+        "title": "Introduction to Azure AI Platform",
+        "topics": ["Overview of Azure Cloud", "Azure AI Portfolio", "Resource Groups and Management"]
+      },
+      {
+        "title": "Azure Machine Learning (Azure ML)",
+        "topics": ["Azure ML Studio Overview", "Automated ML (AutoML)", "Designer Interface", "Understanding Compute Resources", "Model Registry and Deployment Basics"]
+      },
+      {
+        "title": "Azure OpenAI Service",
+        "topics": ["Understanding GPT models (incl. GPT-4.5-preview)", "Prompt Engineering Basics", "Deployment and Endpoint Management", "Use Cases (Content Generation, Summarization)", "Responsible AI Features"]
+      },
+      {
+        "title": "Azure Cognitive Services",
+        "topics": ["Vision Services (Computer Vision, Custom Vision)", "Speech Services (Speech-to-Text, Text-to-Speech)", "Language Services (Sentiment Analysis, Key Phrase Extraction)", "Decision Services (Anomaly Detector)"]
+      },
+      {
+        "title": "Azure Bot Service & Conversational AI",
+        "topics": ["Bot Framework Basics", "QnA Maker Integration", "Building Simple Bots"]
+      },
+      {
+        "title": "Planning & Managing Azure AI Projects",
+        "topics": ["Cost Estimation and Management", "Monitoring and Logging", "Security Considerations", "Integration with Azure DevOps"]
+      }
+    ],
+    "target_audience": [
+      "Project Managers",
+      "Technical Program Managers",
+      "Product Managers",
+      "Business Analysts involved in AI projects"
+    ],
+    "prerequisites": [
+      "Basic understanding of cloud computing concepts",
+      "Completion of TRN-AI-LEAD-2025-01 recommended"
+    ],
+    "internal_link": "https://contoso.sharepoint.com/sites/CloudGuild/SitePages/LearningPath-TRN-AZAI-PM-2025-01.aspx",
+    "external_link_mslearn": "https://learn.microsoft.com/en-us/training/paths/azure-ai-fundamentals/"
+  }
+}

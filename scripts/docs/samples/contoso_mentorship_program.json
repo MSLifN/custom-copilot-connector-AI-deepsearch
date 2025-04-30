@@ -1,0 +1,62 @@
+{
+  "title": "Contoso Leadership & Specialist Mentorship Program",
+  "document_id": "POL-MENTOR-2025-01",
+  "department": "Human Resources - Talent Development",
+  "effective_date": "2025-01-01",
+  "last_updated": "2025-04-10",
+  "company": "Contoso",
+  "content": {
+    "program_overview": "The Contoso Mentorship Program connects high-potential employees with experienced leaders and specialists across the company to foster professional growth, skill development, and career advancement. The program aims to cultivate future leaders and deepen expertise in strategic areas critical to Contoso's success.",
+    "program_goals": [
+      "Accelerate the development of emerging leaders and specialists.",
+      "Facilitate knowledge transfer and sharing of best practices.",
+      "Enhance employee engagement and retention.",
+      "Build a stronger internal network across departments and functions.",
+      "Support employees in navigating their career paths within Contoso."
+    ],
+    "eligibility": {
+      "mentees": [
+        "Employees at Job Level Mid-Level and above (or equivalent).",
+        "Minimum 1 year of service at Contoso.",
+        "Demonstrated high performance and potential for growth.",
+        "Clear development goals aligned with Contoso's strategic priorities.",
+        "Commitment to actively participate in the program for the full duration."
+      ],
+      "mentors": [
+        "Employees at Senior Leadership or Principal Specialist levels (or equivalent).",
+        "Minimum 3 years of service at Contoso.",
+        "Recognized expertise in their field or leadership area.",
+        "Strong coaching and communication skills.",
+        "Commitment to dedicate time for mentoring sessions and guidance."
+      ]
+    },
+    "program_structure": {
+      "duration": "9-12 months per cohort.",
+      "matching_process": "Mentees apply with specific goals; HR Talent Development facilitates matching based on goals, experience, and mentor availability.",
+      "meeting_frequency": "Recommended minimum of 1 hour per month, mutually agreed upon by mentor and mentee.",
+      "focus_areas": [
+        "Leadership Development (Strategic Thinking, Team Management, Communication)",
+        "Technical Specialization (e.g., AI/ML, Cloud Architecture, Cybersecurity)",
+        "Cross-Functional Understanding",
+        "Career Navigation and Advancement"
+      ],
+      "support_resources": [
+        "Program orientation and guidelines.",
+        "Optional workshops on mentoring best practices.",
+        "Dedicated HR contact point.",
+        "Mid-program check-ins."
+      ]
+    },
+    "application_process": {
+      "timeline": "Applications open annually in Q3 for cohort starting in Q1 of the following year.",
+      "mentee_application": "Submit application via internal HR portal, including current role details, career aspirations, specific development goals for the program, and preferred mentor characteristics (if any). Manager approval required.",
+      "mentor_application": "Mentors can volunteer or be nominated. Express interest via internal HR portal, outlining areas of expertise and mentoring capacity."
+    },
+    "expectations": {
+      "mentees": "Drive the relationship, prepare for meetings, be open to feedback, actively work on development goals, respect mentor's time.",
+      "mentors": "Provide guidance and support, share experiences and insights, offer constructive feedback, maintain confidentiality, help mentee expand their network."
+    },
+    "ai_focus_note": "Employees aiming for leadership roles in specialized areas like AI are encouraged to state this clearly in their application. HR will strive to match them with mentors from the AI Center of Excellence or relevant technical leadership.",
+    "internal_link": "https://contoso.sharepoint.com/sites/HR/SitePages/MentorshipProgram.aspx"
+  }
+}
