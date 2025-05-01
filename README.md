@@ -219,6 +219,20 @@ Once the deployment script finishes, your application should be available at `ht
 *   Check the health endpoint (`/health`).
 *   Test the API endpoint (`/api/career-plan`) using a tool like `curl` or Postman.
 
+Example curl command to test the career plan endpoint:
+
+```bash
+# Test the API with a simple career question
+curl -X POST https://<web-app-name>.azurewebsites.net/api/career-plan \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What skills do I need to become a project leader at Contoso?",
+    "conversation_history": []
+  }'
+```
+
+The API should return a JSON response with career guidance based on the HR documents in your Azure AI Search index.
+
 ## Security Considerations
 
 The HR Assistant API is designed with Azure best practices in mind:

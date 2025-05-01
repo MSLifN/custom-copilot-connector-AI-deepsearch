@@ -42,6 +42,32 @@ if ! command -v jq >/dev/null 2>&1; then
 fi
 
 # --- Input Parameters ---
+# Default model
+MODEL_NAME="gpt-4o"
+
+# Parse command-line options
+while getopts ":m:" opt; do
+  case $opt in
+    m)
+      MODEL_NAME="$OPTARG"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND-1))
+
+# Validate model name
+if [[ "$MODEL_NAME" != "gpt-4o" && "$MODEL_NAME" != "o1" ]]; then
+    step_error_exit "Invalid model name specified with -m. Must be either \"gpt-4o\" or \"o1\"."
+fi
+
 # Read Web App Name from parameters file (assuming script is run from project root)
 if [ ! -f "./infra/main.parameters.json" ]; then
     step_error_exit "Parameter file not found at ./infra/main.parameters.json. Run script from project root."
@@ -55,6 +81,7 @@ fi
 step_info "Deployment Configuration"
 printf "  Resource Group: %s (Hardcoded)\n" "$RESOURCE_GROUP"
 printf "  Web App Name: %s (from parameters file)\n" "$WEB_APP_NAME"
+printf "  Selected Model: %s\n" "$MODEL_NAME"
 
 # --- Deployment ---
 step_info "Creating deployment package (app-deployment.zip) from src directory"
@@ -130,6 +157,20 @@ step_success "Cleanup complete"
 
 if [ $DEPLOY_STATUS -ne 0 ]; then
     step_error_exit "Failed to deploy application zip package. Check Azure portal or logs."
+fi
+
+# --- Set App Settings for Selected Model ---
+step_info "Updating App Service configuration for selected model: $MODEL_NAME"
+az webapp config appsettings set \
+    --name "$WEB_APP_NAME" \
+    --resource-group "$RESOURCE_GROUP" \
+    --settings AZURE_OPENAI_DEPLOYMENT_NAME="$MODEL_NAME" \
+    --output none
+
+if [ $? -ne 0 ]; then
+    step_warning "Failed to set AZURE_OPENAI_DEPLOYMENT_NAME app setting. The application might use the wrong model or default."
+else
+    step_success "App Service configured to use model: $MODEL_NAME"
 fi
 
 # --- Post-deployment verification ---
