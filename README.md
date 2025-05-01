@@ -1,252 +1,220 @@
-# HR Assistant API for Copilot Studio Integration
+# HR Assistant REST API
 
-This project provides an HR Assistant API with OpenAPI/Swagger 2.0 specification for easy integration with Microsoft Copilot Studio custom connectors. The API leverages Azure OpenAI and Azure AI Search for RAG (Retrieval-Augmented Generation) to answer career-related questions using internal company documents.
+A production-ready REST API that provides intelligent HR assistance using Azure OpenAI and Azure AI Search. This project implements Retrieval-Augmented Generation (RAG) to answer career-related questions using internal company documents.
 
-## API Overview
+## Features
 
-The HR Assistant API provides endpoints for:
+- **Career Planning API**: Generate personalized career guidance using RAG with Azure OpenAI
+- **Health Endpoint**: Monitor service health and dependencies
+- **Ready for Copilot Studio**: Includes OpenAPI/Swagger 2.0 specification for Copilot integration
+- **Infrastructure as Code**: Azure Bicep templates for consistent, repeatable deployments
+- **Secure by Design**: Uses Azure managed identities and best practices
 
-- **Health Checks**: GET `/health` - Returns the health status of the API components
-- **Career Planning**: POST `/api/career-plan` - Generates career guidance using RAG techniques
+## Quick Start Guide
 
-The API uses Azure OpenAI to generate contextually relevant responses based on information found in HR documents stored in Azure AI Search.
+### Prerequisites
 
-## OpenAPI Specification
+- **Azure CLI**: [Install](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+- **Azure Subscription**: With permissions to create resources
+- **Azure OpenAI Service**: With GPT-4o or o1 model deployed
+- **Python 3.10+**: For local development and scripts
 
-The project includes both OpenAPI 3.0.3 (openapi.yaml) and OpenAPI/Swagger 2.0 (openapi.json) specifications that define:
+### Step 1: Clone the Repository
 
-- **Endpoints**: Complete definition of all API endpoints
-- **Request Schemas**: Detailed schema for the career plan request, including query and conversation history
-- **Response Schemas**: Definition of successful and error response formats
-- **Examples**: Sample requests and responses for common scenarios
+```bash
+git clone https://github.com/amir0135/restapi-demo.git
+cd restapi-demo
+```
 
-For Copilot Studio integration, use the `openapi.json` file (Swagger 2.0 format) which is fully compatible with Copilot Studio custom connectors.
+### Step 2: Login to Azure
+
+```bash
+az login
+```
+
+### Step 3: Deploy Azure Infrastructure 
+
+```bash
+# Create resource group
+az group create --name hr-assistant-demo --location swedencentral
+
+# Deploy infrastructure using Bicep
+az deployment group create \
+  --resource-group hr-assistant-demo \
+  --template-file ./infra/main.bicep \
+  --parameters ./infra/main.parameters.json
+```
+
+### Step 4: Set Up API Keys
+
+```bash
+# Get AI Search admin key
+AI_SEARCH_NAME=$(jq -r ".parameters.aiSearchServiceName.value" ./infra/main.parameters.json)
+AI_SEARCH_KEY=$(az search admin-key show --resource-group hr-assistant-demo --service-name "$AI_SEARCH_NAME" --query primaryKey -o tsv)
+
+# Get Web App name
+WEB_APP_NAME=$(jq -r ".parameters.webAppName.value" ./infra/main.parameters.json)
+
+# Set your OpenAI API key (replace with your actual key)
+OPENAI_API_KEY="your-openai-api-key"
+
+# Configure app settings
+az webapp config appsettings set \
+  --resource-group hr-assistant-demo \
+  --name "$WEB_APP_NAME" \
+  --settings \
+  AZURE_OPENAI_API_KEY="$OPENAI_API_KEY" \
+  AZURE_SEARCH_ADMIN_KEY="$AI_SEARCH_KEY"
+```
+
+### Step 5: Create and Populate Search Index
+
+```bash
+# Install dependencies
+cd scripts
+python -m pip install -r requirements_index.txt
+
+# Run the setup script
+python setup_search_index.py \
+  --endpoint "https://$AI_SEARCH_NAME.search.windows.net" \
+  --key "$AI_SEARCH_KEY" \
+  --index-name "contoso-career-docs-index"
+
+cd ..
+```
+
+### Step 6: Deploy the Application
+
+```bash
+# Make the deployment script executable
+chmod +x ./deploy_app.sh
+
+# Deploy with GPT-4o (default)
+./deploy_app.sh
+
+# OR deploy with o1 model
+./deploy_app.sh -m o1
+```
+
+### Step 7: Test the API
+
+```bash
+# Check API health
+curl https://$WEB_APP_NAME.azurewebsites.net/health
+
+# Test the career plan endpoint
+curl -X POST https://$WEB_APP_NAME.azurewebsites.net/api/career-plan \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "What career paths are available for software engineers at Contoso?",
+    "conversation_history": []
+  }'
+```
 
 ## Project Structure
 
 ```
 /
-├── openapi.yaml           # OpenAPI 3.0.3 specification
-├── openapi.json           # OpenAPI/Swagger 2.0 specification for Copilot Studio
-├── infra/                 # Bicep templates for Azure infrastructure
-│   ├── main.bicep         # Main Bicep file defining resources (App Service, AI Search)
-│   └── main.parameters.json # Parameters for the Bicep template
-├── scripts/               # Helper scripts
-│   ├── setup_search_index.py # Script to create/update the AI Search index
-│   ├── requirements_index.txt # Python dependencies for the search index script
-│   └── docs/              # Sample HR documents for AI Search indexing
-├── src/                   # Application source code
-│   ├── app.py             # Main Flask API application code
-│   ├── requirements.txt   # Python dependencies for the API
-│   └── Procfile           # Defines process for Gunicorn (used by App Service)
-├── deploy_app.sh          # Script to deploy application code to Azure App Service
-├── azuredeploy.json       # ARM template for one-click Azure deployment
-└── README.md              # This file
+├── deploy_app.sh          # Script to deploy application code to Azure
+├── infra/                 # Azure infrastructure as code
+│   ├── main.bicep         # Bicep template defining all Azure resources
+│   └── main.parameters.json # Parameters for infrastructure deployment
+├── openapi.json           # OpenAPI/Swagger 2.0 spec for Copilot Studio
+├── scripts/               # Utility scripts
+│   ├── setup_search_index.py # Script to create and populate search index
+│   └── docs/              # Sample HR documents for the search index
+└── src/                   # Application source code
+    ├── app.py             # Flask API implementation with RAG pattern
+    ├── Procfile           # For Gunicorn process definition
+    └── requirements.txt   # Python dependencies
 ```
+
+## Detailed Setup Guide
+
+### Azure Resources Created
+
+The Bicep template (`infra/main.bicep`) provisions:
+
+1. **App Service Plan**: Premium V2 tier for reliable performance
+2. **Web App**: Python 3.10 App Service with Managed Identity
+3. **Azure AI Search**: Basic tier search service for document indexing
+
+### Configuring Azure OpenAI
+
+This project is designed to work with both Azure OpenAI's GPT-4o and o1 models. The deployment script supports switching between them.
+
+1. **Creating an Azure OpenAI Service**:
+   - In Azure Portal, create an Azure OpenAI resource
+   - Deploy either GPT-4o or o1 model
+   - Note the endpoint URL and API key
+
+2. **Updating Parameters**:
+   - Edit `infra/main.parameters.json`
+   - Update `openAiEndpoint` with your service endpoint
+   - Update `openAiDeploymentName` with your model deployment name
+
+### Managing the Search Index
+
+The search index stores HR documents that provide context for the RAG model:
+
+1. **Adding Custom Documents**:
+   - Place JSON documents in `scripts/docs/` directory
+   - Follow the format in the sample files
+   - Run `setup_search_index.py` to update the index
+
+2. **Index Schema**:
+   - The default schema includes: title, content, source, and created/modified dates
+   - Vector embeddings are generated for semantic search
 
 ## Using with Copilot Studio
 
-To use this API with Microsoft Copilot Studio:
+The included OpenAPI specification (`openapi.json`) can be used to integrate with Microsoft Copilot Studio:
 
-1. **Create a custom connector** in Copilot Studio using the `openapi.json` file
-2. **Configure authentication** for your custom connector
-3. **Create actions** in Copilot Studio that call the API endpoints
-4. **Train your copilot** to use these actions appropriately
+1. In Copilot Studio, create a new custom connector
+2. Upload the `openapi.json` file
+3. Configure authentication
+4. Create actions for the `/api/career-plan` endpoint
+5. Train your copilot to use these actions appropriately
 
-## Deployment to Azure
+## Troubleshooting
 
-This project includes everything needed to deploy the HR Assistant API to Azure, including:
+### Common Issues
 
-- Bicep templates for infrastructure provisioning
-- Scripts for setting up the AI Search index
-- Deployment scripts for the API application
+1. **Deployment Failures**:
+   - Check if resources with the same names already exist
+   - Ensure you have sufficient permissions in your Azure subscription
+   - Verify your Azure OpenAI service is properly configured
 
-### Prerequisites
+2. **API Errors**:
+   - Check the Web App logs in Azure Portal
+   - Verify environment variables are correctly set
+   - Ensure your Azure OpenAI model is deployed and accessible
 
-Before you begin, ensure you have the following:
+3. **Search Index Issues**:
+   - Run the setup script with `--verbose` flag for detailed output
+   - Check if the index already exists and needs to be recreated
 
-1. **Azure CLI**: For interacting with Azure services
-2. **Azure Bicep**: For infrastructure as code
-3. **Python 3.10+**: For running the search setup script
-4. **Azure Subscription**: With permissions to create resources
-5. **Azure OpenAI Service**: With a deployed model (e.g., GPT-4o)
+### Getting Help
 
-### Deployment Steps
+For issues with:
+- The REST API code: Check the source code in `src/app.py`
+- Infrastructure: Review the Bicep template in `infra/main.bicep`
+- Deployment: Run the script with debug output: `AZURE_CLI_DEBUG=1 ./deploy_app.sh`
 
-Follow these steps to deploy the infrastructure and application:
+## Security Best Practices
 
-**Step 1: Clone or Download the Project**
+This project follows Azure security best practices:
 
-Ensure you have this project structure on your local machine.
-
-**Step 2: Configure Parameters**
-
-Review and update the `infra/main.parameters.json` file. Key parameters:
-
-*   `location`: Azure region for deployment.
-*   `appServicePlanName`: Name for the App Service Plan.
-*   `webAppName`: Unique name for the Web App.
-*   `aiSearchServiceName`: Unique name for the AI Search service.
-*   `openAiEndpoint`: Your Azure OpenAI service endpoint.
-*   `openAiDeploymentName`: Your Azure OpenAI model deployment name (set to `gpt-4o` based on preference).
-
-**Step 3: Provision Azure Infrastructure using Bicep**
-
-Open your terminal in the project root directory and run the following Azure CLI command. The resource group `hr-assistant-demo` will be used.
-
-```bash
-# Define location (use location from parameters file)
-LOCATION="swedencentral" # Or the location specified in main.parameters.json
-
-# Create the resource group (if it doesn't exist)
-az group create --name "hr-assistant-demo" --location "$LOCATION"
-
-# Check if AI Search service already exists
-AI_SEARCH_NAME=$(jq -r ".parameters.aiSearchServiceName.value" ./infra/main.parameters.json)
-SEARCH_EXISTS=$(az search service show --name "$AI_SEARCH_NAME" --resource-group "hr-assistant-demo" --query name --output tsv 2>/dev/null)
-
-if [ ! -z "$SEARCH_EXISTS" ]; then
-  echo "⚠️ Warning: Azure AI Search service '$AI_SEARCH_NAME' already exists."
-  echo "  You cannot change the SKU of an existing search service via deployment."
-  echo "  Options:"
-  echo "  1. Delete the existing search service: az search service delete --name \"$AI_SEARCH_NAME\" --resource-group \"hr-assistant-demo\" --yes"
-  echo "  2. Use a different name for the search service in main.parameters.json"
-  echo "  3. Continue deployment (existing search service will be unmodified)"
-  echo ""
-  read -p "Do you want to delete the existing search service? (y/N): " DELETE_CHOICE
-  if [[ "$DELETE_CHOICE" == "y" || "$DELETE_CHOICE" == "Y" ]]; then
-    az search service delete --name "$AI_SEARCH_NAME" --resource-group "hr-assistant-demo" --yes
-    echo "Deleted existing search service. Proceeding with deployment..."
-  else
-    echo "Using existing search service. Note that any SKU changes in the Bicep template will be ignored."
-  fi
-fi
-
-# Deploy the Bicep template
-az deployment group create \
-    --resource-group "hr-assistant-demo" \
-    --template-file "./infra/main.bicep" \
-    --parameters "./infra/main.parameters.json"
-```
-
-This command will create the Resource Group, App Service Plan, Web App (with System Managed Identity enabled), and AI Search service based on the Bicep template.
-
-> **Important Note**: Azure AI Search service SKUs cannot be modified after creation. If deployment fails with an error like `Cannot update sku for an existing search service`, you'll need to either:
-> 1. Delete the existing search service and deploy again
-> 2. Use a new name for the search service in `main.parameters.json`
-> 3. Modify your Bicep template to use the `existing` keyword for the search service to avoid trying to modify it
-
-**Step 4: Configure Application Secrets (API Keys)**
-
-The Bicep template sets up placeholders for API keys but does not deploy the actual secrets for security reasons. You need to configure these in the Azure App Service Application Settings:
-
-1.  **Get AI Search Admin Key:**
-    ```bash
-    AI_SEARCH_NAME=$(jq -r ".parameters.aiSearchServiceName.value" ./infra/main.parameters.json)
-    AI_SEARCH_KEY=$(az search admin-key show --resource-group "hr-assistant-demo" --service-name "$AI_SEARCH_NAME" --query primaryKey -o tsv)
-    echo "AI Search Key: $AI_SEARCH_KEY"
-    ```
-2.  **Get Your Azure OpenAI API Key:** Retrieve this from your Azure OpenAI service deployment in the Azure portal.
-3.  **Set App Settings:**
-    ```bash
-    WEB_APP_NAME=$(jq -r ".parameters.webAppName.value" ./infra/main.parameters.json)
-    # Replace <your-openai-api-key> with your actual key
-    OPENAI_API_KEY="<your-openai-api-key>"
-
-    az webapp config appsettings set \
-        --resource-group "hr-assistant-demo" \
-        --name "$WEB_APP_NAME" \
-        --settings \
-        AZURE_OPENAI_API_KEY="$OPENAI_API_KEY" \
-        AZURE_SEARCH_ADMIN_KEY="$AI_SEARCH_KEY"
-    ```
-
-**Recommendation:** For production environments, use Azure Key Vault to store these secrets and configure the App Service to reference them using Managed Identity. The Bicep template already enables System Managed Identity on the Web App.
-
-**Step 5: Set Up AI Search Index**
-
-This step creates the search index and uploads the sample documents. Run this from the project root directory:
-
-```bash
-# Navigate to the scripts directory
-cd scripts
-
-# Create a virtual environment and install dependencies
-python3 -m venv venv_index
-source venv_index/bin/activate
-pip install -r requirements_index.txt
-
-# Run the setup script (using values from parameters file)
-AI_SEARCH_ENDPOINT="https://$(jq -r ".parameters.aiSearchServiceName.value" ../infra/main.parameters.json).search.windows.net"
-AI_SEARCH_INDEX_NAME=$(jq -r ".parameters.aiSearchIndexName.value" ../infra/main.parameters.json)
-# The AI_SEARCH_KEY was retrieved in the previous step
-
-python setup_search_index.py \
-    --endpoint "$AI_SEARCH_ENDPOINT" \
-    --key "$AI_SEARCH_KEY" \
-    --index-name "$AI_SEARCH_INDEX_NAME"
-
-# Deactivate the virtual environment
-deactivate
-
-# Navigate back to the project root
-cd ..
-```
-
-**Step 6: Deploy Application Code**
-
-Run the simplified deployment script from the project root directory. It will automatically use the resource group `hr-assistant-demo` and read the web app name from `infra/main.parameters.json`.
-
-```bash
-# Make the script executable (if needed)
-chmod +x deploy_app.sh
-
-# Run the deployment script (no arguments needed)
-./deploy_app.sh
-```
-
-This script will:
-1.  Zip the contents of the `src` directory.
-2.  Use `az webapp deploy` to upload the zip file to your App Service.
-3.  Azure App Service (Oryx build system) will automatically detect `requirements.txt` and install the dependencies.
-4.  Restart the Web App.
-
-**Step 7: Verify Deployment**
-
-Once the deployment script finishes, your application should be available at `https://<web-app-name>.azurewebsites.net`.
-
-*   Access the root URL (`/`) to see the status.
-*   Check the health endpoint (`/health`).
-*   Test the API endpoint (`/api/career-plan`) using a tool like `curl` or Postman.
-
-Example curl command to test the career plan endpoint:
-
-```bash
-# Test the API with a simple career question
-curl -X POST https://<web-app-name>.azurewebsites.net/api/career-plan \
-  -H "Content-Type: application/json" \
-  -d '{
-    "query": "What skills do I need to become a project leader at Contoso?",
-    "conversation_history": []
-  }'
-```
-
-The API should return a JSON response with career guidance based on the HR documents in your Azure AI Search index.
-
-## Security Considerations
-
-The HR Assistant API is designed with Azure best practices in mind:
-
-- **System-Assigned Managed Identity**: Used for secure access to Azure resources
-- **Azure Key Vault integration**: Recommended for storing secrets
-- **HTTPS Only**: All endpoints are secured with TLS
-- **API Key Management**: No hardcoded secrets in the codebase
+1. **Managed Identities**: System-assigned identity for secure service access
+2. **No Hardcoded Secrets**: API keys stored in app settings (consider Key Vault for production)
+3. **HTTPS Only**: All endpoints require HTTPS
+4. **TLS 1.2+**: Enforced minimum TLS version
 
 ## Contributing
 
-Contributions to improve the API or OpenAPI specifications are welcome. Please submit pull requests to the GitHub repository.
+Contributions are welcome! Please feel free to submit a pull request.
 
 ## License
 
-This project is licensed under MIT license.
+This project is licensed under MIT License.
 
